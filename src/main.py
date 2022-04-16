@@ -78,6 +78,25 @@ def handle_planet():
         print(dictionary)
         return jsonify(dictionary), 201
 
+@app.route('/vehicles', methods=['GET','POST'])
+def handle_vehicle():
+    if request.method == 'GET':
+        vehicles= Vehicle.query.all()
+        return jsonify(list(map(
+            lambda vehicle: vehicle.serialize(), 
+            vehicles))), 201
+    else:
+        body=request.json
+        planet=Vehicle.create(
+            name=body['name'],
+            passengers=body['passengers'],
+            length=body['length'],
+            manufacturer=body['manucfacturer']
+        )
+        dictionary= planet.serialize()
+        print(dictionary)
+        return jsonify(dictionary), 201
+
 
 BASE_URL="https://www.swapi.tech/api"
 
@@ -96,7 +115,10 @@ def populate_characters():
         body=response.json()
 
     #se agregan las propiedades de cada character a la lista
-        all_characters.append(body['result']['properties'])
+        character_insert=body['result']['properties']
+        character_insert['uid']=body['result']['uid']
+        character_insert['description']=body['result']['description']
+        all_characters.append(character_insert)
     instances=[]
     #recorremos la lista con todos los personajes y creamos la instancia
     for character in all_characters:
@@ -124,7 +146,10 @@ def populate_planets():
         body=response.json()
 
     #se agregan las propiedades de cada character a la lista
-        all_planets.append(body['result']['properties'])
+        planet_insert=body['result']['properties']
+        planet_insert['uid']=body['result']['uid']
+        planet_insert['description']=body['result']['description']
+        all_planets.append(planet_insert)
     instances=[]
     #recorremos la lista con todos los personajes y creamos la instancia
     for planet in all_planets:
@@ -152,7 +177,10 @@ def populate_vehicles():
         body=response.json()
 
     #se agregan las propiedades de cada character a la lista
-        all_vehicles.append(body['result']['properties'])
+        vehicle_insert=body['result']['properties']
+        vehicle_insert['uid']=body['result']['uid']
+        vehicle_insert['description']=body['result']['description']        
+        all_vehicles.append(vehicle_insert)
     instances=[]
     #recorremos la lista con todos los personajes y creamos la instancia
     for vehicle in all_vehicles:

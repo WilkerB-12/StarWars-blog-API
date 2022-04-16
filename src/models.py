@@ -18,6 +18,8 @@ class item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     url= db.Column(db.String(250), nullable=True)
+    uid=db.Column(db.Integer,nullable=True)
+    description=db.Column(db.String,nullable=True)
 
 class Character(item):
     # Here we define db.Columns for the table address.
@@ -34,10 +36,14 @@ class Character(item):
     def serialize(self):
         return {
             "id": self.id,
+            "uid":self.uid,
             "name": self.name,
             "eye_color":self.eye_color,
             "birth_year":self.birth_year,
-            "gender":self.gender
+            "gender":self.gender,
+            "heigth":self.height,
+            "mass":self.mass,
+            "description":self.description
             }
 
     def __init__(self,**kwargs):
@@ -85,10 +91,12 @@ class Planet(item):
     def serialize(self):
         return {
             "id": self.id,
+            "uid":self.uid,
             "name": self.name,
             "diameter":self.diameter,
             "rotation_period":self.rotation_period,
-            "orbital_period":self.orbital_period
+            "orbital_period":self.orbital_period,
+            "description":self.description
             }
 
     def __init__(self,**kwargs):
@@ -119,7 +127,7 @@ class Planet(item):
 class Vehicle(item):
     vehicle_class=db.Column(db.String(250))
     manufacturer=db.Column(db.String(250))
-    lenth=db.Column(db.String(250))
+    length=db.Column(db.String(250))
     cost_in_credits=db.Column(db.String(250))
     crew=db.Column(db.String(250))
     passengers=db.Column(db.String(250))
@@ -131,10 +139,12 @@ class Vehicle(item):
     def serialize(self):
         return {
             "id": self.id,
+            "uid":self.uid,
             "name": self.name,
             "manufacturer":self.manufacturer,
-            "length":self.lenth,
-            "pilots":self.pilots
+            "length":self.length,
+            "passengers":self.passengers,
+            "description":self.description
             }
 
     def __init__(self,**kwargs):
