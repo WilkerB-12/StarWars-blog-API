@@ -1,3 +1,5 @@
+# This API is working with https://github.com/WilkerB-12/starwar-blog-with-own-API front end repository
+
 # Flask Boilerplate for Profesional Development
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
